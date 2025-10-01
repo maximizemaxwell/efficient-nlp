@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import videoLinks from '../data/videos.json';
 
 const courses = [
   {
@@ -8,7 +9,8 @@ const courses = [
     summary: "Study introduction and operational guidelines",
     difficulty: "★☆☆☆",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: null
   },
   {
     week: 1,
@@ -16,7 +18,8 @@ const courses = [
     summary: "Comprehensive overview of NLP efficiency. Covers quantization, pruning, compression, and PEFT as optimization problems.",
     difficulty: "★★☆☆",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: "https://aclanthology.org/2023.tacl-1.48/"
   },
   {
     week: 2,
@@ -24,7 +27,8 @@ const courses = [
     summary: "LLM optimization techniques from data, model, and system perspectives. Provides constrained optimization framework.",
     difficulty: "★★☆☆",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: "https://arxiv.org/abs/2404.14294"
   },
   {
     week: 3,
@@ -32,7 +36,8 @@ const courses = [
     summary: "DRO-based pruning — robust loss optimization against data distribution shifts.",
     difficulty: "★★★☆",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: "https://aclanthology.org/2025.acl-long.1414/"
   },
   {
     week: 4,
@@ -40,7 +45,8 @@ const courses = [
     summary: "Bayesian optimization-based mixed-precision quantization + pruning.",
     difficulty: "★★★☆",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: "https://aclanthology.org/2025.findings-naacl.240/"
   },
   {
     week: 5,
@@ -48,7 +54,8 @@ const courses = [
     summary: "Combines QAT with efficient fine-tuning approaches.",
     difficulty: "★★★☆",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: "https://aclanthology.org/2025.acl-long.99/"
   },
   {
     week: 6,
@@ -56,7 +63,8 @@ const courses = [
     summary: "Adds Residual Mapping to LoRA → rank-constrained optimization stability.",
     difficulty: "★★☆☆",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: "https://aclanthology.org/2024.findings-acl.525/"
   },
   {
     week: 7,
@@ -64,7 +72,8 @@ const courses = [
     summary: "Statistical measure-based optimization for improved quantized LLM fine-tuning performance.",
     difficulty: "★★★☆",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: "https://aclanthology.org/2025.findings-acl.208/"
   },
   {
     week: 8,
@@ -72,7 +81,8 @@ const courses = [
     summary: "Formalizes layer skipping as differentiable optimization.",
     difficulty: "★★★★",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: "https://aclanthology.org/2025.findings-acl.377/"
   },
   {
     week: 9,
@@ -80,7 +90,8 @@ const courses = [
     summary: "Approaches speculative decoding as constrained optimization problem.",
     difficulty: "★★★★",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: "https://aclanthology.org/2025.naacl-long.239/"
   },
   {
     week: 10,
@@ -88,7 +99,8 @@ const courses = [
     summary: "Weight + activation binarization → projected gradient-based optimization.",
     difficulty: "★★★☆",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: "https://aclanthology.org/2024.findings-acl.516/"
   },
   {
     week: 11,
@@ -96,7 +108,8 @@ const courses = [
     summary: "Visual token pruning optimization in multimodal LLMs.",
     difficulty: "★★★☆",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: "https://aclanthology.org/2025.findings-acl.1024/"
   },
   {
     week: 12,
@@ -104,7 +117,8 @@ const courses = [
     summary: "Models domain adaptation pre-training as efficient optimization problem.",
     difficulty: "★★☆☆",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: "https://aclanthology.org/2024.findings-acl.606/"
   },
   {
     week: 13,
@@ -112,7 +126,8 @@ const courses = [
     summary: "Latest efficient LLM survey. Wrap-up from multi-objective optimization perspective.",
     difficulty: "★★☆☆",
     pdf: null,
-    video: null
+    video: null,
+    paperUrl: "https://arxiv.org/abs/2312.03863"
   }
 ];
 ---
@@ -149,18 +164,31 @@ const courses = [
             {courses.map(course => (
               <tr>
                 <td class="week-cell">Week {course.week}</td>
-                <td class="title-cell">{course.title}</td>
+                <td class="title-cell">
+                  {course.paperUrl ? (
+                    <a href={course.paperUrl} class="paper-link" target="_blank" rel="noopener noreferrer">
+                      {course.title}
+                      <span class="external-icon">↗</span>
+                    </a>
+                  ) : (
+                    course.title
+                  )}
+                </td>
                 <td class="summary-cell">{course.summary}</td>
                 <td class="difficulty-cell">{course.difficulty}</td>
                 <td class="resource-cell">
-                  <div id={`pdf-cell-${course.week}`} class="resource-content">
-                    <span class="no-resource">Coming Soon</span>
-                  </div>
+                  <a href={`/efficient-nlp/pdfs/week${course.week}.pdf`} class="resource-link" download>
+                    📄 Download PDF
+                  </a>
                 </td>
                 <td class="resource-cell">
-                  <div id={`video-cell-${course.week}`} class="resource-content">
+                  {videoLinks[`week${course.week}`] ? (
+                    <a href={videoLinks[`week${course.week}`]} class="resource-link" target="_blank" rel="noopener noreferrer">
+                      📹 Watch Video
+                    </a>
+                  ) : (
                     <span class="no-resource">Coming Soon</span>
-                  </div>
+                  )}
                 </td>
               </tr>
             ))}
@@ -284,6 +312,37 @@ const courses = [
     color: #f9fafb;
     max-width: 300px;
     line-height: 1.5;
+  }
+
+  .paper-link {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    padding: 2px 0;
+    display: inline-block;
+  }
+
+  .paper-link:hover {
+    color: #60a5fa;
+    text-decoration: underline;
+    text-decoration-color: #60a5fa;
+    text-underline-offset: 3px;
+  }
+
+  .paper-link:active {
+    color: #3b82f6;
+  }
+
+  .external-icon {
+    font-size: 0.8em;
+    margin-left: 4px;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+  }
+
+  .paper-link:hover .external-icon {
+    opacity: 1;
   }
 
   .summary-cell {
@@ -420,56 +479,3 @@ const courses = [
     }
   }
 </style>
-
-<script>
-  // Update resources based on localStorage
-  function updateResources() {
-    const weeks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-    
-    weeks.forEach(week => {
-      // Update PDF status
-      const pdfCell = document.getElementById(`pdf-cell-${week}`);
-      const hasPdf = localStorage.getItem(`pdf_week_${week}`) !== null;
-      
-      if (pdfCell) {
-        if (hasPdf) {
-          pdfCell.innerHTML = `
-            <a href="/efficient-nlp/pdfs/week${week}.pdf" class="resource-link" download>
-              📄 Download PDF
-            </a>
-          `;
-        } else {
-          pdfCell.innerHTML = '<span class="no-resource">Coming Soon</span>';
-        }
-      }
-      
-      // Update Video status
-      const videoCell = document.getElementById(`video-cell-${week}`);
-      const videoUrl = localStorage.getItem(`video_week_${week}`);
-      
-      if (videoCell) {
-        if (videoUrl) {
-          videoCell.innerHTML = `
-            <a href="${videoUrl}" class="resource-link" target="_blank" rel="noopener noreferrer">
-              📹 Watch Video
-            </a>
-          `;
-        } else {
-          videoCell.innerHTML = '<span class="no-resource">Coming Soon</span>';
-        }
-      }
-    });
-  }
-
-  // Update resources on page load
-  document.addEventListener('DOMContentLoaded', updateResources);
-  
-  // Listen for storage changes (when admin page makes changes in different tab)
-  window.addEventListener('storage', updateResources);
-  
-  // Listen for custom events (same-tab updates)
-  window.addEventListener('resourcesUpdated', updateResources);
-  
-  // Also check for updates periodically (fallback)
-  setInterval(updateResources, 2000);
-</script>
