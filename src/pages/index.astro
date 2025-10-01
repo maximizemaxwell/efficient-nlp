@@ -1,0 +1,430 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const courses = [
+  {
+    week: 0,
+    title: "OT (Orientation)",
+    summary: "Study introduction and operational guidelines",
+    difficulty: "★☆☆☆",
+    pdf: null,
+    video: null
+  },
+  {
+    week: 1,
+    title: "Efficient Methods for Natural Language Processing: A Survey",
+    summary: "Comprehensive overview of NLP efficiency. Covers quantization, pruning, compression, and PEFT as optimization problems.",
+    difficulty: "★★☆☆",
+    pdf: null,
+    video: null
+  },
+  {
+    week: 2,
+    title: "A Survey on Efficient Inference for Large Language Models",
+    summary: "LLM optimization techniques from data, model, and system perspectives. Provides constrained optimization framework.",
+    difficulty: "★★☆☆",
+    pdf: null,
+    video: null
+  },
+  {
+    week: 3,
+    title: "DRPruning: Efficient LLM Pruning through Distributionally Robust Optimization",
+    summary: "DRO-based pruning — robust loss optimization against data distribution shifts.",
+    difficulty: "★★★☆",
+    pdf: null,
+    video: null
+  },
+  {
+    week: 4,
+    title: "QPruner: Probabilistic Decision Quantization for Structured Pruning in LLMs",
+    summary: "Bayesian optimization-based mixed-precision quantization + pruning.",
+    difficulty: "★★★☆",
+    pdf: null,
+    video: null
+  },
+  {
+    week: 5,
+    title: "L4Q: Parameter Efficient Quantization-Aware Fine-Tuning on LLMs",
+    summary: "Combines QAT with efficient fine-tuning approaches.",
+    difficulty: "★★★☆",
+    pdf: null,
+    video: null
+  },
+  {
+    week: 6,
+    title: "ResLoRA: Identity Residual Mapping in Low-Rank Adaptation",
+    summary: "Adds Residual Mapping to LoRA → rank-constrained optimization stability.",
+    difficulty: "★★☆☆",
+    pdf: null,
+    video: null
+  },
+  {
+    week: 7,
+    title: "MeMoTune: Measure & Moment-Driven Fine-Tuning for Quantized LLMs",
+    summary: "Statistical measure-based optimization for improved quantized LLM fine-tuning performance.",
+    difficulty: "★★★☆",
+    pdf: null,
+    video: null
+  },
+  {
+    week: 8,
+    title: "DiffSkip: Differential Layer Skipping in LLMs",
+    summary: "Formalizes layer skipping as differentiable optimization.",
+    difficulty: "★★★★",
+    pdf: null,
+    video: null
+  },
+  {
+    week: 9,
+    title: "Constrained Decoding with Speculative Lookaheads",
+    summary: "Approaches speculative decoding as constrained optimization problem.",
+    difficulty: "★★★★",
+    pdf: null,
+    video: null
+  },
+  {
+    week: 10,
+    title: "DB-LLM: Accurate Dual-Binarization for Efficient LLMs",
+    summary: "Weight + activation binarization → projected gradient-based optimization.",
+    difficulty: "★★★☆",
+    pdf: null,
+    video: null
+  },
+  {
+    week: 11,
+    title: "PruneVid: Visual Token Pruning for Efficient Video LLMs",
+    summary: "Visual token pruning optimization in multimodal LLMs.",
+    difficulty: "★★★☆",
+    pdf: null,
+    video: null
+  },
+  {
+    week: 12,
+    title: "Efficient Continual Pre-training for Domain-Specific LLMs",
+    summary: "Models domain adaptation pre-training as efficient optimization problem.",
+    difficulty: "★★☆☆",
+    pdf: null,
+    video: null
+  },
+  {
+    week: 13,
+    title: "Efficient Large Language Models: A Survey",
+    summary: "Latest efficient LLM survey. Wrap-up from multi-objective optimization perspective.",
+    difficulty: "★★☆☆",
+    pdf: null,
+    video: null
+  }
+];
+---
+
+<Layout title="AI Journal Club - Efficient NLP">
+  <main class="container">
+    <header class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">AI Journal Club</h1>
+        <p class="hero-subtitle">Paper study focused on Efficient NLP and mathematical optimization</p>
+        <div class="hero-description">
+          <p>A journal club for reading, summarizing, and sharing the latest AI research papers.</p>
+          <p>Covers topics including model compression, efficient training, and structural optimization.</p>
+        </div>
+      </div>
+    </header>
+
+    <section class="schedule">
+      <h2 class="section-title">Course Schedule</h2>
+      
+      <div class="table-container">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Paper Title</th>
+              <th>Summary</th>
+              <th>Difficulty</th>
+              <th>Resources</th>
+              <th>Video</th>
+            </tr>
+          </thead>
+          <tbody>
+            {courses.map(course => (
+              <tr>
+                <td class="week-cell">Week {course.week}</td>
+                <td class="title-cell">{course.title}</td>
+                <td class="summary-cell">{course.summary}</td>
+                <td class="difficulty-cell">{course.difficulty}</td>
+                <td class="resource-cell">
+                  {course.pdf ? (
+                    <a href={`/pdfs/week${course.week}.pdf`} class="resource-link" download>
+                      📄 Download PDF
+                    </a>
+                  ) : (
+                    <span class="no-resource">Coming Soon</span>
+                  )}
+                </td>
+                <td class="resource-cell">
+                  {course.video ? (
+                    <a href={course.video} class="resource-link" target="_blank" rel="noopener noreferrer">
+                      📹 Watch Video
+                    </a>
+                  ) : (
+                    <span class="no-resource">Coming Soon</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="info">
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>Study Format</h3>
+          <ul>
+            <li>Individual paper presentations (~10 minutes each)</li>
+            <li>Shared paper preparation with rotating presentations</li>
+            <li>Instructor-led lecture format on selected papers</li>
+          </ul>
+        </div>
+        
+        <div class="info-card">
+          <h3>Key Topics</h3>
+          <ul>
+            <li>Model Compression: Pruning, Quantization, Low-Rank Adaptation (LoRA)</li>
+            <li>Efficient Training: PEFT, Quantization-Aware Training (QAT)</li>
+            <li>Structural Optimization: Layer Skipping, Speculative Decoding</li>
+            <li>Optimization Surveys: Balancing Performance, Efficiency, and Fairness</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 4rem 0 6rem 0;
+    border-bottom: 1px solid #374151;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: #9ca3af;
+    margin-bottom: 2rem;
+  }
+
+  .hero-description {
+    max-width: 600px;
+    margin: 0 auto;
+    color: #d1d5db;
+    font-size: 1.1rem;
+  }
+
+  .hero-description p {
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 4rem 0 3rem 0;
+    color: #f9fafb;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid #374151;
+    background: rgba(17, 24, 39, 0.5);
+    backdrop-filter: blur(10px);
+  }
+
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  .schedule-table th {
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+    color: #f9fafb;
+    padding: 1.25rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid #4b5563;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .schedule-table td {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid #374151;
+    vertical-align: top;
+  }
+
+  .schedule-table tr:hover {
+    background: rgba(55, 65, 81, 0.3);
+  }
+
+  .week-cell {
+    font-weight: 600;
+    color: #60a5fa;
+    white-space: nowrap;
+    min-width: 80px;
+  }
+
+  .title-cell {
+    font-weight: 500;
+    color: #f9fafb;
+    max-width: 300px;
+    line-height: 1.5;
+  }
+
+  .summary-cell {
+    color: #d1d5db;
+    max-width: 400px;
+    line-height: 1.5;
+  }
+
+  .difficulty-cell {
+    color: #fbbf24;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .resource-cell {
+    text-align: center;
+    white-space: nowrap;
+    min-width: 120px;
+  }
+
+  .resource-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+    color: white;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .resource-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  }
+
+  .no-resource {
+    color: #6b7280;
+    font-style: italic;
+    font-size: 0.875rem;
+  }
+
+  .info {
+    margin: 4rem 0;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .info-card {
+    background: rgba(17, 24, 39, 0.6);
+    border: 1px solid #374151;
+    border-radius: 12px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .info-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #f9fafb;
+    margin-bottom: 1.5rem;
+  }
+
+  .info-card ul {
+    list-style: none;
+  }
+
+  .info-card li {
+    color: #d1d5db;
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .info-card li::before {
+    content: "▶";
+    position: absolute;
+    left: 0;
+    color: #60a5fa;
+  }
+
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .schedule-table {
+      font-size: 0.875rem;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+      padding: 1rem 0.75rem;
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .info-card {
+      padding: 1.5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .table-container {
+      border-radius: 8px;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+      padding: 0.75rem 0.5rem;
+    }
+
+    .resource-link {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+    }
+  }
+</style>
