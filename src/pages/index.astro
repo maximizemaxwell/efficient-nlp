@@ -153,22 +153,14 @@ const courses = [
                 <td class="summary-cell">{course.summary}</td>
                 <td class="difficulty-cell">{course.difficulty}</td>
                 <td class="resource-cell">
-                  {course.pdf ? (
-                    <a href={`/pdfs/week${course.week}.pdf`} class="resource-link" download>
-                      📄 Download PDF
-                    </a>
-                  ) : (
+                  <div id={`pdf-cell-${course.week}`} class="resource-content">
                     <span class="no-resource">Coming Soon</span>
-                  )}
+                  </div>
                 </td>
                 <td class="resource-cell">
-                  {course.video ? (
-                    <a href={course.video} class="resource-link" target="_blank" rel="noopener noreferrer">
-                      📹 Watch Video
-                    </a>
-                  ) : (
+                  <div id={`video-cell-${course.week}`} class="resource-content">
                     <span class="no-resource">Coming Soon</span>
-                  )}
+                  </div>
                 </td>
               </tr>
             ))}
@@ -428,3 +420,56 @@ const courses = [
     }
   }
 </style>
+
+<script>
+  // Update resources based on localStorage
+  function updateResources() {
+    const weeks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+    
+    weeks.forEach(week => {
+      // Update PDF status
+      const pdfCell = document.getElementById(`pdf-cell-${week}`);
+      const hasPdf = localStorage.getItem(`pdf_week_${week}`) !== null;
+      
+      if (pdfCell) {
+        if (hasPdf) {
+          pdfCell.innerHTML = `
+            <a href="/efficient-nlp/pdfs/week${week}.pdf" class="resource-link" download>
+              📄 Download PDF
+            </a>
+          `;
+        } else {
+          pdfCell.innerHTML = '<span class="no-resource">Coming Soon</span>';
+        }
+      }
+      
+      // Update Video status
+      const videoCell = document.getElementById(`video-cell-${week}`);
+      const videoUrl = localStorage.getItem(`video_week_${week}`);
+      
+      if (videoCell) {
+        if (videoUrl) {
+          videoCell.innerHTML = `
+            <a href="${videoUrl}" class="resource-link" target="_blank" rel="noopener noreferrer">
+              📹 Watch Video
+            </a>
+          `;
+        } else {
+          videoCell.innerHTML = '<span class="no-resource">Coming Soon</span>';
+        }
+      }
+    });
+  }
+
+  // Update resources on page load
+  document.addEventListener('DOMContentLoaded', updateResources);
+  
+  // Listen for storage changes (when admin page makes changes in different tab)
+  window.addEventListener('storage', updateResources);
+  
+  // Listen for custom events (same-tab updates)
+  window.addEventListener('resourcesUpdated', updateResources);
+  
+  // Also check for updates periodically (fallback)
+  setInterval(updateResources, 2000);
+</script>

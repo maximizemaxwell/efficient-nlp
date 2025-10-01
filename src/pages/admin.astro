@@ -86,12 +86,80 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </section>
 
+    <section class="delete-section">
+      <h2>Delete Resources</h2>
+      
+      <div class="delete-grid">
+        <div class="delete-card">
+          <h3>Delete PDF Files</h3>
+          <p class="instruction">Remove PDF files from the course schedule.</p>
+          
+          <div class="delete-form">
+            <div class="form-group">
+              <label for="delete-pdf-select">Select Week:</label>
+              <select id="delete-pdf-select" class="form-control">
+                <option value="">Choose a week...</option>
+                <option value="0">Week 0 - OT</option>
+                <option value="1">Week 1 - Efficient Methods for NLP</option>
+                <option value="2">Week 2 - Efficient Inference for LLMs</option>
+                <option value="3">Week 3 - DRPruning</option>
+                <option value="4">Week 4 - QPruner</option>
+                <option value="5">Week 5 - L4Q</option>
+                <option value="6">Week 6 - ResLoRA</option>
+                <option value="7">Week 7 - MeMoTune</option>
+                <option value="8">Week 8 - DiffSkip</option>
+                <option value="9">Week 9 - Constrained Decoding</option>
+                <option value="10">Week 10 - DB-LLM</option>
+                <option value="11">Week 11 - PruneVid</option>
+                <option value="12">Week 12 - Continual Pre-training</option>
+                <option value="13">Week 13 - Efficient LLMs Survey</option>
+              </select>
+            </div>
+            
+            <button id="delete-pdf-btn" class="btn-danger">Delete PDF</button>
+          </div>
+        </div>
+
+        <div class="delete-card">
+          <h3>Delete Video Links</h3>
+          <p class="instruction">Remove video links from the course schedule.</p>
+          
+          <div class="delete-form">
+            <div class="form-group">
+              <label for="delete-video-select">Select Week:</label>
+              <select id="delete-video-select" class="form-control">
+                <option value="">Choose a week...</option>
+                <option value="0">Week 0 - OT</option>
+                <option value="1">Week 1 - Efficient Methods for NLP</option>
+                <option value="2">Week 2 - Efficient Inference for LLMs</option>
+                <option value="3">Week 3 - DRPruning</option>
+                <option value="4">Week 4 - QPruner</option>
+                <option value="5">Week 5 - L4Q</option>
+                <option value="6">Week 6 - ResLoRA</option>
+                <option value="7">Week 7 - MeMoTune</option>
+                <option value="8">Week 8 - DiffSkip</option>
+                <option value="9">Week 9 - Constrained Decoding</option>
+                <option value="10">Week 10 - DB-LLM</option>
+                <option value="11">Week 11 - PruneVid</option>
+                <option value="12">Week 12 - Continual Pre-training</option>
+                <option value="13">Week 13 - Efficient LLMs Survey</option>
+              </select>
+            </div>
+            
+            <button id="delete-video-btn" class="btn-danger">Delete Video Link</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <div class="info-box">
       <h3>📌 Usage Guide</h3>
       <ul>
         <li>PDF files are saved in public/pdfs/ folder as weekN.pdf format.</li>
         <li>Video links are stored in browser local storage. Separate management needed for production.</li>
         <li>Download links will appear on the main page after file upload.</li>
+        <li>Use the delete section to remove PDFs or video links from specific weeks.</li>
+        <li>All delete operations require confirmation to prevent accidental removal.</li>
       </ul>
     </div>
   </main>
@@ -291,8 +359,79 @@ import Layout from '../layouts/Layout.astro';
     color: #60a5fa;
   }
 
+  .delete-section {
+    margin: 3rem 0;
+  }
+
+  .delete-section h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #f9fafb;
+    margin-bottom: 1.5rem;
+  }
+
+  .delete-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+
+  .delete-card {
+    background: rgba(220, 38, 38, 0.1);
+    border: 1px solid #dc2626;
+    border-radius: 12px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .delete-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #fca5a5;
+    margin-bottom: 0.5rem;
+  }
+
+  .delete-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .btn-danger {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+  }
+
+  .btn-danger:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+  }
+
+  .btn-danger:active {
+    transform: translateY(0);
+  }
+
+  .btn-danger:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
   @media (max-width: 768px) {
     .upload-section {
+      grid-template-columns: 1fr;
+    }
+
+    .delete-grid {
       grid-template-columns: 1fr;
     }
 
@@ -300,13 +439,21 @@ import Layout from '../layouts/Layout.astro';
       font-size: 2rem;
     }
 
-    .upload-card {
+    .upload-card, .delete-card {
       padding: 1.5rem;
     }
   }
 </style>
 
 <script>
+  // Trigger update across all tabs
+  function triggerGlobalUpdate() {
+    // Dispatch custom event for same-tab updates
+    window.dispatchEvent(new CustomEvent('resourcesUpdated'));
+    
+    // For cross-tab updates, we rely on the storage event and periodic checks
+  }
+
   // Status update function
   function updateStatus() {
     const statusGrid = document.getElementById('status-grid');
@@ -330,13 +477,14 @@ import Layout from '../layouts/Layout.astro';
     ];
 
     statusGrid.innerHTML = weeks.map(item => {
+      const hasPdf = localStorage.getItem(`pdf_week_${item.week}`) !== null;
       const hasVideo = localStorage.getItem(`video_week_${item.week}`) !== null;
       
       return `
-        <div class="status-item ${hasVideo ? 'has-video' : ''}">
+        <div class="status-item ${hasPdf ? 'has-pdf' : ''} ${hasVideo ? 'has-video' : ''}">
           <div class="week-label">Week ${item.week}</div>
           <div class="status-indicators">
-            <div class="indicator" title="PDF"></div>
+            <div class="indicator ${hasPdf ? 'active' : ''}" title="PDF"></div>
             <div class="indicator ${hasVideo ? 'active' : ''}" title="Video"></div>
           </div>
         </div>
@@ -364,11 +512,15 @@ import Layout from '../layouts/Layout.astro';
       return;
     }
     
+    // Mark PDF as uploaded in localStorage
+    localStorage.setItem(`pdf_week_${week}`, 'uploaded');
+    
     // In actual implementation, upload file to server
     alert(`Week ${week} PDF file has been uploaded.\nIn production, it will be saved as public/pdfs/week${week}.pdf`);
     
     fileInput.value = '';
     updateStatus();
+    triggerGlobalUpdate();
   });
 
   // Save video link
@@ -398,6 +550,70 @@ import Layout from '../layouts/Layout.astro';
     
     urlInput.value = '';
     updateStatus();
+    triggerGlobalUpdate();
+  });
+
+  // Delete PDF functionality
+  document.getElementById('delete-pdf-btn')?.addEventListener('click', function() {
+    const weekSelect = document.getElementById('delete-pdf-select') as HTMLSelectElement;
+    
+    if (!weekSelect) return;
+    
+    const week = weekSelect.value;
+    
+    if (!week) {
+      alert('Please select a week to delete PDF from.');
+      return;
+    }
+    
+    const hasPdf = localStorage.getItem(`pdf_week_${week}`) !== null;
+    
+    if (!hasPdf) {
+      alert(`No PDF found for Week ${week}.`);
+      return;
+    }
+    
+    if (confirm(`Are you sure you want to delete the PDF for Week ${week}?\nThis action cannot be undone.`)) {
+      // Remove PDF status from localStorage
+      localStorage.removeItem(`pdf_week_${week}`);
+      
+      // In actual implementation, this would delete the file from server
+      alert(`Week ${week} PDF has been deleted.\nIn production, this would remove public/pdfs/week${week}.pdf`);
+      
+      weekSelect.value = '';
+      updateStatus();
+      triggerGlobalUpdate();
+    }
+  });
+
+  // Delete video link functionality
+  document.getElementById('delete-video-btn')?.addEventListener('click', function() {
+    const weekSelect = document.getElementById('delete-video-select') as HTMLSelectElement;
+    
+    if (!weekSelect) return;
+    
+    const week = weekSelect.value;
+    
+    if (!week) {
+      alert('Please select a week to delete video link from.');
+      return;
+    }
+    
+    const hasVideo = localStorage.getItem(`video_week_${week}`) !== null;
+    
+    if (!hasVideo) {
+      alert(`No video link found for Week ${week}.`);
+      return;
+    }
+    
+    if (confirm(`Are you sure you want to delete the video link for Week ${week}?\nThis action cannot be undone.`)) {
+      localStorage.removeItem(`video_week_${week}`);
+      alert(`Week ${week} video link has been deleted.`);
+      
+      weekSelect.value = '';
+      updateStatus();
+      triggerGlobalUpdate();
+    }
   });
 
   // Update status on page load
